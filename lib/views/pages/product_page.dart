@@ -10,7 +10,7 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   @override
   void initState() {
-    //context.read<CoffeeCubit>().getCoffeeData();
+    context.read<ProductCubit>().getProductData();
     return super.initState();
   }
 
@@ -77,75 +77,68 @@ class _ProductPageState extends State<ProductPage> {
   Widget contentTwo() {
     return Padding(
       padding: const EdgeInsets.only(
-          left: defaultMargin - 4,
-          right: defaultMargin - 4,
-          top: defaultRadius,
-          bottom: defaultRadius),
+          left: 4, right: 4, top: defaultRadius, bottom: defaultRadius),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // SizedBox(
-          //   height: MyUtility(context).height / 1.25,
-          //   width: double.infinity,
-          //   child: BlocBuilder<CoffeeCubit, CoffeeState>(
-          //     builder: (context, state) {
-          //       if (state is CoffeeGetSuccess) {
-          //         if (state.result.isEmpty) {
-          //           return Center(
-          //             child: Column(
-          //               mainAxisAlignment: MainAxisAlignment.center,
-          //               children: [
-          //                 const SizedBox(
-          //                   width: 150,
-          //                   height: 50,
-          //                   child: Icon(
-          //                     Icons.hourglass_empty,
-          //                   ),
-          //                 ),
-          //                 Text(
-          //                   'Data kosong',
-          //                   style:
-          //                       blackTextStyleInter.copyWith(fontWeight: bold),
-          //                 ),
-          //               ],
-          //             ),
-          //           );
-          //         } else {
-          //           return ListView.builder(
-          //             shrinkWrap: true,
-          //             padding: const EdgeInsets.only(top: 8),
-          //             itemCount: state.result.length,
-          //             itemBuilder: (context, index) {
-          //               var data = state.result[index];
-          //               final List fixedList =
-          //                   Iterable<int>.generate(data.ingredients.length)
-          //                       .toList();
-
-          //               fixedList.map((idx) {
-          //                 String val = data.ingredients[idx];
-          //                 // print(val);
-          //                 // print("tes");
-          //               });
-          //               // print(data.ingredients);
-          //               return Padding(
-          //                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 16),
-          //                 child: CoffeeListData(
-          //                     img: data.image,
-          //                     title: data.title,
-          //                     description: data.description,
-          //                     ingredients: data.ingredients),
-          //               );
-          //             },
-          //           );
-          //         }
-          //       } else if (state is CoffeeGetFailed) {
-          //         return Text(state.message);
-          //       } else {
-          //         return Container();
-          //       }
-          //     },
-          //   ),
-          // ),
+          SizedBox(
+            height: MyUtility(context).height / 1.45,
+            width: double.infinity,
+            child: BlocBuilder<ProductCubit, ProductState>(
+              builder: (context, state) {
+                if (state is ProductGetSuccess) {
+                  if (state.result.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            width: 150,
+                            height: 50,
+                            child: Icon(
+                              Icons.hourglass_empty,
+                            ),
+                          ),
+                          Text(
+                            'Data kosong',
+                            style:
+                                blackTextStyleInter.copyWith(fontWeight: bold),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.only(top: 8),
+                      itemCount: state.result.length,
+                      itemBuilder: (context, index) {
+                        var dataProduct = state.result[index];
+                        return Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              defaultMargin, 0, defaultMargin, 16),
+                          child: CardProductWidget(
+                            productModel: dataProduct,
+                            onTap: () {
+                              print(dataProduct.id);
+                              context
+                                  .read<RoutesCubit>()
+                                  .emit(RoutesUpdateSupplier(dataProduct.id));
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  }
+                } else if (state is ProductGetFailed) {
+                  return Text(state.message);
+                } else {
+                  return Container();
+                }
+              },
+            ),
+          ),
         ],
       ),
     );

@@ -1,7 +1,7 @@
 part of 'models.dart';
 
-class SupplierModel {
-  SupplierModel({
+class SupplierDetailModel {
+  SupplierDetailModel({
     required this.id,
     required this.namaSupplier,
     required this.noTelp,
@@ -13,7 +13,8 @@ class SupplierModel {
   String noTelp;
   String alamat;
 
-  factory SupplierModel.fromJson(Map<String, dynamic> json) => SupplierModel(
+  factory SupplierDetailModel.fromJson(Map<String, dynamic> json) =>
+      SupplierDetailModel(
         id: json["id"],
         namaSupplier: json["namaSupplier"],
         noTelp: json["noTelp"],

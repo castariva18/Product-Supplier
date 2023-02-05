@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mini_project_suplier/views/pages/page.dart';
 import 'cubit/api/auth_cubit/auth_cubit.dart';
+import 'cubit/api/product_cubit/product_cubit.dart';
 import 'cubit/api/register_cubit/register_cubit.dart';
+import 'cubit/api/supplier_cubit/supplier_cubit.dart';
 import 'cubit/routes/routes_cubit.dart';
 
 void main() {
@@ -25,6 +27,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => RegisterCubit(),
+        ),
+        BlocProvider(
+          create: (_) => SupplierCubit(),
+        ),
+        BlocProvider(
+          create: (_) => ProductCubit(),
         ),
       ],
       child: MaterialApp(

@@ -25,6 +25,12 @@ class _WrapperPageState extends State<WrapperPage> {
                             ? AddProductPage()
                             : (pageState is RoutesAddSuplierPage)
                                 ? AddSuplierPage()
-                                : Container());
+                                : (pageState is RoutesUpdateSupplier)
+                                    ? UpdateSupplierPage(
+                                        idSupplier: pageState.id)
+                                    : (pageState is RoutesUpdateBarang)
+                                        ? UpdateBarangPage(
+                                            idBarang: pageState.id)
+                                        : Container());
   }
 }

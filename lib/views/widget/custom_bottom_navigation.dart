@@ -41,19 +41,20 @@ class CustomBottomNavigation extends StatelessWidget {
                   width: 24,
                   height: 24,
                   decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(
-                            'assets/product-' +
-                                ((selectedIndex == 0)
-                                    ? 'active.png'
-                                    : 'nonactive.png'),
-                          ),
-                          fit: BoxFit.contain)),
+                    image: DecorationImage(
+                        image: AssetImage(
+                          'assets/suplier-' +
+                              ((selectedIndex == 0)
+                                  ? 'active.png'
+                                  : 'nonactive.png'),
+                        ),
+                        fit: BoxFit.contain),
+                  ),
                 ),
                 Container(
                   width: 50,
                   child: Text(
-                    'Product',
+                    'Supplier',
                     style: whiteTextStyleInter.copyWith(
                       fontSize: 10,
                       color: ((selectedIndex == 0))
@@ -77,20 +78,19 @@ class CustomBottomNavigation extends StatelessWidget {
                   width: 24,
                   height: 24,
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                          'assets/suplier-' +
-                              ((selectedIndex == 1)
-                                  ? 'active.png'
-                                  : 'nonactive.png'),
-                        ),
-                        fit: BoxFit.contain),
-                  ),
+                      image: DecorationImage(
+                          image: AssetImage(
+                            'assets/product-' +
+                                ((selectedIndex == 1)
+                                    ? 'active.png'
+                                    : 'nonactive.png'),
+                          ),
+                          fit: BoxFit.contain)),
                 ),
                 Container(
                   width: 50,
                   child: Text(
-                    'Supplier',
+                    'Product',
                     style: whiteTextStyleInter.copyWith(
                       fontSize: 10,
                       color: ((selectedIndex == 1))
@@ -102,7 +102,7 @@ class CustomBottomNavigation extends StatelessWidget {
                 ),
               ],
             ),
-          ),
+          )
         ],
       ),
     );

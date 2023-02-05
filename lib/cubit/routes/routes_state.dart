@@ -48,3 +48,17 @@ class RoutesAddSuplierPage extends RoutesState {
   @override
   List<Object> get props => [];
 }
+
+class RoutesUpdateSupplier extends RoutesState {
+  final int id;
+  RoutesUpdateSupplier(this.id);
+  @override
+  List<Object> get props => [id];
+}
+
+class RoutesUpdateBarang extends RoutesState {
+  final int id;
+  RoutesUpdateBarang(this.id);
+  @override
+  List<Object> get props => [id];
+}

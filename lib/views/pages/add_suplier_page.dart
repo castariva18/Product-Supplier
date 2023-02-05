@@ -53,7 +53,7 @@ class _AddSuplierPageState extends State<AddSuplierPage> {
               child: Container(
                 child: TextField(
                   keyboardType: TextInputType.text,
-                  controller: alamatController,
+                  controller: namaSupplierController,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.diversity_3),
                     labelText: 'Nama supplier',
@@ -129,20 +129,113 @@ class _AddSuplierPageState extends State<AddSuplierPage> {
                   ),
                 ),
               )),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              width: double.infinity,
-              height: 60,
-              margin: EdgeInsets.only(top: 20, right: 16, left: 16, bottom: 20),
-              decoration: BoxDecoration(
-                  color: kTextOrangeColor,
-                  borderRadius: BorderRadius.circular(10)),
-              child: Center(
-                  child: Text("Simpan",
+          Container(
+            width: double.infinity,
+            height: 55,
+            margin: const EdgeInsets.symmetric(
+              horizontal: defaultMargin + 2,
+            ),
+            child: BlocConsumer<SupplierCubit, SupplierState>(
+              listener: (context, state) {
+                if (state is SupplierSuccess) {
+                  Flushbar(
+                    duration: const Duration(milliseconds: 3000),
+                    flushbarPosition: FlushbarPosition.TOP,
+                    backgroundColor: Colors.green,
+                    titleText: Text(
+                      'Success SignUp',
                       style: whiteTextStyleInter.copyWith(
-                          fontSize: 16, fontWeight: bold),
-                      textAlign: TextAlign.center)),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    messageText: Text(
+                      'Berhasil melakukan SignUp',
+                      style: whiteTextStyleInter.copyWith(
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ).show(context);
+                  context.read<RoutesCubit>().emit(RoutesMainPage(0));
+                } else if (state is SupplierFailed) {
+                  // print(state.message);
+
+                  Flushbar(
+                    duration: const Duration(milliseconds: 3000),
+                    flushbarPosition: FlushbarPosition.TOP,
+                    backgroundColor: Colors.amber,
+                    titleText: Text(
+                      'Warning',
+                      style: whiteTextStyleInter.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    messageText: Text(
+                      state.message,
+                      style: whiteTextStyleInter.copyWith(
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ).show(context);
+                  context.read<RoutesCubit>().emit(RoutesMainPage(0));
+                }
+              },
+              builder: (context, state) {
+                if (state is SupplierLoading) {
+                  return const Center(
+                    child: SpinKitFadingCircle(
+                      color: kPrimaryColor,
+                      size: 50,
+                    ),
+                  );
+                }
+
+                return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: kTextOrangeColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    textStyle: whiteTextStyleInter.copyWith(
+                      fontWeight: medium,
+                    ),
+                  ),
+                  onPressed: () async {
+                    if (alamatController.text == "" ||
+                        namaSupplierController.text == "" ||
+                        noTelpController.text == "") {
+                      Flushbar(
+                        duration: const Duration(milliseconds: 3000),
+                        flushbarPosition: FlushbarPosition.TOP,
+                        backgroundColor: Colors.red,
+                        titleText: Text(
+                          'Ada form kosong!',
+                          style: whiteTextStyleInter.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        messageText: Text(
+                          'Lakukan pengisian form dengan benar',
+                          style: whiteTextStyleInter.copyWith(
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ).show(context);
+                    } else {
+                      context.read<SupplierCubit>().addSupplier(
+                            alamatController.text.toString(),
+                            namaSupplierController.text.toString(),
+                            noTelpController.text.toString(),
+                          );
+                    }
+                  },
+                  child: Text(
+                    'Simpan',
+                    style: whiteTextStyleInter.copyWith(
+                      fontSize: 16,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -154,7 +247,7 @@ class _AddSuplierPageState extends State<AddSuplierPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        context.read<RoutesCubit>().emit(RoutesMainPage(1));
+        context.read<RoutesCubit>().emit(RoutesMainPage(0));
         return false;
       },
       child: Scaffold(
