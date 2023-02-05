@@ -3,23 +3,26 @@ part of 'services.dart';
 class AuthServices {
   static Future<LoginModel> authLogin(String username, String password) async {
     Map<String, dynamic> loginData = {
-      'Username': username,
-      'Password': password,
+      'username': username,
+      'password': password,
     };
     final reponse = await Dio().post('$baseUrl/auth/login',
         data: loginData,
         options: Options(
-            contentType: Headers.formUrlEncodedContentType,
+            headers: {
+              HttpHeaders.contentTypeHeader: "application/json",
+            },
             followRedirects: false,
             validateStatus: (status) {
               return status! < 500;
             }));
 
+    print(reponse.statusCode);
     final json = reponse.data;
     if (reponse.statusCode == 200) {
       LoginModel loginResult = LoginModel.fromJson(json);
       SharedPreferences preferences = await SharedPreferences.getInstance();
-      preferences.setString('token', loginResult.token);
+      preferences.setString('token', loginResult.data.token);
       return loginResult;
     } else if (reponse.statusCode == 401) {
       return throw Exception("Wrong Password!");
@@ -30,7 +33,6 @@ class AuthServices {
     }
   }
 
-  /// Logout Method
   static Future<void> signOut() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.remove('token');

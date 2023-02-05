@@ -15,10 +15,22 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   }
 
   Future<void> _checkStatusPageToken() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? token = preferences.getString('token');
     var duration = const Duration(milliseconds: 3000);
-    Timer(duration, () {
-      context.read<RoutesCubit>().emit(RoutesLoginPage());
-    });
+    if (token != null) {
+      var duration = const Duration(milliseconds: 2000);
+      Timer(duration, () {
+        // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+        context.read<RoutesCubit>().emit(RoutesDashboardPage());
+      });
+    } else {
+      var duration = const Duration(milliseconds: 2000);
+      Timer(duration, () {
+        // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+        context.read<RoutesCubit>().emit(RoutesLoginPage());
+      });
+    }
   }
 
   Widget content() {
@@ -34,21 +46,21 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                 child: Icon(
                   Icons.token,
                   size: 48,
-                  color: kWhiteColor,
+                  color: kTextOrangeColor,
                 ),
               ),
               Container(
                   margin: EdgeInsets.symmetric(vertical: 10),
                   child: Text(
                     "Supply",
-                    style: whiteTextStyleInter.copyWith(
+                    style: orangeTextStyleInter.copyWith(
                         fontSize: 32, fontWeight: bold),
                   )),
             ],
           ),
           Text(
             'Logistics Supplier',
-            style: whiteTextStyleInter.copyWith(
+            style: orangeTextStyleInter.copyWith(
               fontWeight: regular,
               fontSize: 22.0,
             ),
@@ -58,7 +70,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
             height: 100,
           ),
           const SpinKitThreeInOut(
-            color: kSecondaryColor,
+            color: kTextOrangeColor,
             size: 30,
           ),
         ],

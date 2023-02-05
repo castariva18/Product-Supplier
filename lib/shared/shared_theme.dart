@@ -21,7 +21,7 @@ TextStyle blackTextStyleInter = GoogleFonts.inter(
   color: kBlackColor,
 );
 TextStyle orangeTextStyleInter = GoogleFonts.inter(
-  color: kBlackColor,
+  color: kTextOrangeColor,
 );
 TextStyle greyTextStyleInter = GoogleFonts.inter(
   color: kPrimaryGreyColor,
