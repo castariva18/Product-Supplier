@@ -7,7 +7,7 @@ part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(RegisterInitial());
-  void lRegisterGlobal(
+  void registerGlobal(
       String profileName, String username, String password) async {
     try {
       emit(RegisterLoading());
@@ -17,9 +17,5 @@ class RegisterCubit extends Cubit<RegisterState> {
     } catch (e) {
       emit(RegisterFailed(e.toString()));
     }
-  }
-
-  void logoutGlobal() {
-    RegisterServices.signOut();
   }
 }

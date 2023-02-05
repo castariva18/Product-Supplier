@@ -110,22 +110,109 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               )),
-          GestureDetector(
-            onTap: () {
-              context.read<RoutesCubit>().emit(RoutesMainPage(0));
-            },
-            child: Container(
-              width: double.infinity,
-              height: 60,
-              margin: EdgeInsets.only(top: 20, right: 16, left: 16, bottom: 20),
-              decoration: BoxDecoration(
-                  color: kTextOrangeColor,
-                  borderRadius: BorderRadius.circular(10)),
-              child: Center(
-                  child: Text("Login",
+          Container(
+            width: double.infinity,
+            height: 55,
+            margin: const EdgeInsets.symmetric(
+              horizontal: defaultMargin + 2,
+            ),
+            child: BlocConsumer<AuthCubit, AuthState>(
+              listener: (context, state) {
+                if (state is AuthSuccess) {
+                  Flushbar(
+                    duration: const Duration(milliseconds: 3000),
+                    flushbarPosition: FlushbarPosition.TOP,
+                    backgroundColor: Colors.green,
+                    titleText: Text(
+                      'Success Login',
                       style: whiteTextStyleInter.copyWith(
-                          fontSize: 16, fontWeight: bold),
-                      textAlign: TextAlign.center)),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    messageText: Text(
+                      'Berhasil melakukan login',
+                      style: whiteTextStyleInter.copyWith(
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ).show(context);
+                  // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+                  context.read<RoutesCubit>().emit(RoutesMainPage(0));
+                } else if (state is AuthFailed) {
+                  // print(state.message);
+                  Flushbar(
+                    duration: const Duration(milliseconds: 3000),
+                    flushbarPosition: FlushbarPosition.TOP,
+                    backgroundColor: Colors.red,
+                    titleText: Text(
+                      'Gagal Login',
+                      style: whiteTextStyleInter.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    messageText: Text(
+                      state.message,
+                      style: whiteTextStyleInter.copyWith(
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ).show(context);
+                }
+              },
+              builder: (context, state) {
+                if (state is AuthLoading) {
+                  return const Center(
+                    child: SpinKitFadingCircle(
+                      color: kPrimaryColor,
+                      size: 50,
+                    ),
+                  );
+                }
+
+                return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: kTextOrangeColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    textStyle: whiteTextStyleInter.copyWith(
+                      fontWeight: medium,
+                    ),
+                  ),
+                  onPressed: () async {
+                    if (usernameController.text == "" ||
+                        passwordController.text == "") {
+                      Flushbar(
+                        duration: const Duration(milliseconds: 3000),
+                        flushbarPosition: FlushbarPosition.TOP,
+                        backgroundColor: Colors.red,
+                        titleText: Text(
+                          'Ada form kosong!',
+                          style: whiteTextStyleInter.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        messageText: Text(
+                          'Lakukan pengisian form dengan benar',
+                          style: whiteTextStyleInter.copyWith(
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ).show(context);
+                    } else {
+                      context.read<AuthCubit>().loginGlobal(
+                          usernameController.text.toString(),
+                          passwordController.text.toString());
+                    }
+                  },
+                  child: Text(
+                    'Login',
+                    style: whiteTextStyleInter.copyWith(
+                      fontSize: 16,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           Row(

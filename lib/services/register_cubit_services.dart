@@ -2,25 +2,30 @@ part of 'services.dart';
 
 class RegisterServices {
   static Future<RegisterModel> authRegister(
-      String profileName, String username, String password) async {
-    Map<String, dynamic> loginData = {
-      'profileName': profileName,
-      'Username': username,
-      'Password': password,
+      String password, String profileName, String username) async {
+    Map<String, dynamic> registerData = {
+      "password": password,
+      "profileName": profileName,
+      "username": username
     };
-    final reponse = await Dio().post('$baseUrl/auth/registerasi',
-        data: loginData,
+    final reponse = await Dio().post('$baseUrl/auth/register',
+        data: registerData,
         options: Options(
-            contentType: Headers.formUrlEncodedContentType,
+            headers: {
+              HttpHeaders.contentTypeHeader: "application/json",
+            },
             followRedirects: false,
             validateStatus: (status) {
               return status! < 500;
             }));
 
     final json = reponse.data;
+
+    print(json);
     if (reponse.statusCode == 200) {
-      RegisterModel loginResult = RegisterModel.fromJson(json);
-      return loginResult;
+      RegisterModel registerResult = RegisterModel.fromJson(json);
+
+      return registerResult;
     } else if (reponse.statusCode == 401) {
       return throw Exception("Wrong Password!");
     } else if (reponse.statusCode == 404) {
@@ -28,11 +33,5 @@ class RegisterServices {
     } else {
       return throw Exception("Error Server");
     }
-  }
-
-  /// Logout Method
-  static Future<void> signOut() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.remove('token');
   }
 }

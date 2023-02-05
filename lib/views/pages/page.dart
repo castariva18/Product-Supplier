@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import '../../cubit/api/auth_cubit/auth_cubit.dart';
+import '../../cubit/api/register_cubit/register_cubit.dart';
 import '../../cubit/routes/routes_cubit.dart';
 import '../../shared/shared.dart';
 import '../widget/widget.dart';
