@@ -11,7 +11,7 @@ class ProductDetailModel {
 
   int id;
   String namaBarang;
-  int harga;
+  double harga;
   int stok;
   SupplierDetail supplier;
 

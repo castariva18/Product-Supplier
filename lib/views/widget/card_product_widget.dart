@@ -20,7 +20,7 @@ class _CardProductWidgetState extends State<CardProductWidget> {
       onTap: () {
         context
             .read<RoutesCubit>()
-            .emit(RoutesUpdateSupplier(widget.productModel.id));
+            .emit(RoutesUpdateBarang(widget.productModel.id));
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10),

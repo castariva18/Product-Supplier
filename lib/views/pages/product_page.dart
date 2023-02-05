@@ -123,7 +123,7 @@ class _ProductPageState extends State<ProductPage> {
                               print(dataProduct.id);
                               context
                                   .read<RoutesCubit>()
-                                  .emit(RoutesUpdateSupplier(dataProduct.id));
+                                  .emit(RoutesUpdateBarang(dataProduct.id));
                               Navigator.of(context).pop();
                             },
                           ),
