@@ -43,10 +43,10 @@ class _MainPageState extends State<MainPage> {
                 },
                 children: [
                   Center(
-                    child: ProductPage(),
+                    child: SuplierPage(),
                   ),
                   Center(
-                    child: SuplierPage(),
+                    child: ProductPage(),
                   ),
                 ],
               ),

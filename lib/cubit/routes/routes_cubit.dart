@@ -21,6 +21,12 @@ class RoutesCubit extends Cubit<RoutesState> {
       emit(RoutesAddProductPage());
     } else if (state is RoutesAddSuplierPage) {
       emit(RoutesAddSuplierPage());
+    } else if (state is RoutesUpdateSupplier) {
+      final int id = 0;
+      emit(RoutesUpdateSupplier(id));
+    } else if (state is RoutesUpdateBarang) {
+      final int id = 0;
+      emit(RoutesUpdateBarang(id));
     }
   }
 }

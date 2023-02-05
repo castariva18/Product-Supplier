@@ -18,19 +18,19 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? token = preferences.getString('token');
     var duration = const Duration(milliseconds: 3000);
-    if (token != null) {
-      var duration = const Duration(milliseconds: 2000);
-      Timer(duration, () {
-        // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-        context.read<RoutesCubit>().emit(RoutesDashboardPage());
-      });
-    } else {
-      var duration = const Duration(milliseconds: 2000);
-      Timer(duration, () {
-        // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-        context.read<RoutesCubit>().emit(RoutesLoginPage());
-      });
-    }
+    // if (token != null) {
+    //   var duration = const Duration(milliseconds: 2000);
+    //   Timer(duration, () {
+    //     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+    //     context.read<RoutesCubit>().emit(RoutesMainPage(0));
+    //   });
+    // } else {
+    //   var duration = const Duration(milliseconds: 2000);
+    //   Timer(duration, () {
+    //     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+    context.read<RoutesCubit>().emit(RoutesLoginPage());
+    // });
+    // }
   }
 
   Widget content() {

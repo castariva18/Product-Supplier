@@ -8,3 +8,5 @@ import '../shared/shared.dart';
 
 part 'auth_cubit_services.dart';
 part 'register_cubit_services.dart';
+part 'supplier_cubit_services.dart';
+part 'product_cubit_services.dart';

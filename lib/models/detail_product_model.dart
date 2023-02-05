@@ -1,7 +1,7 @@
 part of 'models.dart';
 
-class ProductModel {
-  ProductModel({
+class ProductDetailModel {
+  ProductDetailModel({
     required this.id,
     required this.namaBarang,
     required this.harga,
@@ -11,21 +11,22 @@ class ProductModel {
 
   int id;
   String namaBarang;
-  double harga;
+  int harga;
   int stok;
-  Supplier supplier;
+  SupplierDetail supplier;
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
+  factory ProductDetailModel.fromJson(Map<String, dynamic> json) =>
+      ProductDetailModel(
         id: json["id"],
         namaBarang: json["namaBarang"],
         harga: json["harga"],
         stok: json["stok"],
-        supplier: Supplier.fromJson(json["supplier"]),
+        supplier: SupplierDetail.fromJson(json["supplier"]),
       );
 }
 
-class Supplier {
-  Supplier({
+class SupplierDetail {
+  SupplierDetail({
     required this.id,
     required this.namaSupplier,
     required this.noTelp,
@@ -37,7 +38,7 @@ class Supplier {
   String noTelp;
   String alamat;
 
-  factory Supplier.fromJson(Map<String, dynamic> json) => Supplier(
+  factory SupplierDetail.fromJson(Map<String, dynamic> json) => SupplierDetail(
         id: json["id"],
         namaSupplier: json["namaSupplier"],
         noTelp: json["noTelp"],
